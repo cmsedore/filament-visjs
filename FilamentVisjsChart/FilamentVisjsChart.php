@@ -14,9 +14,9 @@ class FilamentVisjsChart extends Widget
 
     protected static ?string $pollingInterval = null;
 
-    protected int|string|array $columnSpan = 6;
+    protected int | string | array $columnSpan = 6;
 
-    protected int|string|array $rowSpan = 6;
+    protected int | string | array $rowSpan = 6;
 
     protected static bool $isLazy = false;
 
@@ -25,7 +25,9 @@ class FilamentVisjsChart extends Widget
     protected array $options = [];
 
     protected float $heightPercentage = 0.3;
+
     protected float $minZoom = 0.05;
+
     protected float $maxZoom = 2;
 
     protected function getFilters(): ?array

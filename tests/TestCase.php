@@ -4,6 +4,7 @@ namespace Cmsedore\FilamentVisjsChart\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use Cmsedore\FilamentVisjsChart\FilamentVisjsChartServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -16,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Cmsedore\FilamentVisjsChart\FilamentVisjsChartServiceProvider;
 
 class TestCase extends Orchestra
 {

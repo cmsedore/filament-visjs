@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Cmsedore\FilamentVisjsChart\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentVisjsChartCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-visjs';
 
     public $description = 'My command';
 

@@ -16,8 +16,6 @@ class FilamentVisjsChart extends Widget
 
     protected int|string|array $columnSpan = 6;
 
-    protected int|string|array $rowSpan = 6;
-
     protected static bool $isLazy = false;
 
     public mixed $filter = null;
@@ -36,12 +34,12 @@ class FilamentVisjsChart extends Widget
 
     protected function getDescription(): ?string
     {
-        return self::$description;
+        return static::$description;
     }
 
     protected function getHeading(): ?string
     {
-        return self::$heading;
+        return static::$heading;
     }
 
     protected function getOptions(): array

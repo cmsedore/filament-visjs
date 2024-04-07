@@ -1,14 +1,9 @@
 # A filament plugin for the VisJS graph package.
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/cmsedore/filament-visjs.svg?style=flat-square)](https://packagist.org/packages/cmsedore/filament-visjs)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/cmsedore/filament-visjs/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/cmsedore/filament-visjs/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/cmsedore/filament-visjs/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/cmsedore/filament-visjs/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/cmsedore/filament-visjs.svg?style=flat-square)](https://packagist.org/packages/cmsedore/filament-visjs)
 
 
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
+This is a basic plugin for filament v3 that allows you to use the VisJS Network graph package in your filament projects.
 ## Installation
 
 You can install the package via composer:
@@ -17,10 +12,14 @@ You can install the package via composer:
 composer require cmsedore/filament-visjs
 ```
 
-You can publish the config file with:
+It isn't in the public packagist repository, so you will need to add the repository to your composer.json file.
 
-```bash
-php artisan vendor:publish --tag="filament-visjs-chart-config"
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/cmsedore/filament-visjs"
+    }
 ```
 
 Optionally, you can publish the views using
@@ -29,42 +28,148 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-visjs-chart-views"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
 
 ## Usage
 
+This is a filament widget -- you should extend the FilamentVisJsChart widget class and reference it in the appropriate place (panel, etc).  Here is an example of a simple widget that displays a network graph.
+
 ```php
-$filamentVisjs = new Cmsedore\FilamentVisjsChart();
-echo $filamentVisjsChart->echoPhrase('Hello, Cmsedore!');
-```
+<?php
 
-## Testing
+namespace App\Filament\Resources\VertexResource\Widgets;
 
-```bash
-composer test
-```
+use Cmsedore\FilamentVisjsChart\FilamentVisjsChart;
 
-## Changelog
+class NetworkChartDemo extends FilamentVisjsChart
+{
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+    protected static ?string $heading = 'Network Chart Demo';
+    protected static ?string $description = 'This is a demo of a network chart.';
 
-## Contributing
+    protected array $options = [
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+        'layout' => [
+            'hierarchical' => [
+                'shakeTowards' => 'roots',
+                'direction' => 'UD',
+            ],
+        ],
+        'physics' => [
+            'barnesHut' => [
+                'springConstant' => 1,
+                'avoidOverlap' => 1,
+            ],
+            'hierarchicalRepulsion' => [
+                'nodeDistance' => 200,
+                'avoidOverlap' => 1,
+            ],
+        ],
+    ];
 
-## Security Vulnerabilities
+    protected function getData(): array
+    {
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+        $nodes = [
+            [
+                'id' => 1,
+                'label' => "Node 1",
+                'color' => 'purple',
+                'level' => 1,
+                'shape' => 'box',
+                'mass' => 10,
+            ],
+            [
+                'id' => 2,
+                'label' => "Node 2",
+                'color' => 'green',
+                'level' => 2,
+                'shape' => 'box',
+                'mass' => 10,
+            ],
+            [
+                'id' => 3,
+                'label' => "Node 3",
+                'color' => 'red',
+                'level' => 2,
+                'shape' => 'box',
+                'mass' => 10,
+            ],
+            [
+                'id' => 4,
+                'label' => "Node 4",
+                'color' => 'blue',
+                'level' => 2,
+                'shape' => 'box',
+                'mass' => 10,
+            ],
+            [
+                'id' => 5,
+                'label' => "Node 5",
+                'color' => 'gray',
+                'level' => 2,
+                'shape' => 'box',
+                'mass' => 10,
+            ]
+        ];
+        $edges = [
+            [
+                'from' => 1,
+                'to' => 2,
+                'label' => 'Edge 1',
+                'color' => 'pink',
+                'arrows' => 'to',
+            ],
+            [
+                'from' => 1,
+                'to' => 3,
+                'label' => 'Edge 2',
+                'color' => 'pink',
+                'arrows' => 'to',
+            ],
+            [
+                'from' => 1,
+                'to' => 4,
+                'label' => 'Edge 3',
+                'color' => 'pink',
+                'arrows' => 'to',
+            ],
+            [
+                'from' => 1,
+                'to' => 5,
+                'label' => 'Edge 4',
+                'color' => 'pink',
+                'arrows' => 'to',
+            ],
+            [
+                'from' => 4,
+                'to' => 5,
+                'label' => 'Edge 5',
+                'color' => 'pink',
+                'arrows' => 'to',
+            ]
+        ];
+
+        $data = [
+            'nodes' => $nodes,
+            'edges' => $edges,
+        ];
+
+        return $data;
+    }
+
+    protected function getType(): string
+    {
+        return 'forceDirectedGraph';
+    }
+}
+
+````
 
 ## Credits
 
 - [Chris Sedore](https://github.com/cmsedore)
-- [All Contributors](../../contributors)
+
+This is heavily based on the chart widget in the filament package.  I just added the VisJS package and some basic functionality to get it working.
 
 ## License
 
